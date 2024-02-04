@@ -13,4 +13,13 @@ public class ClientTest {
         Assert.assertEquals(1l, client.getCode());
         Assert.assertEquals("Thalles", client.getName());
     }
+    @Test
+    public void testSetter(){
+        Client client = new Client();
+        client.setCode(1);
+        Assert.assertEquals(1, client.getCode());
+        client.setName("Thalles");
+        Assert.assertEquals("Thalles", client.getName());
+
+    }
 }
