@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDao implements IProductDao {
@@ -121,6 +122,30 @@ public class ProductDao implements IProductDao {
 
     @Override
     public List<Product> findAll() {
-        return null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement("SELECT * FROM tb_product");
+            rs = st.executeQuery();
+
+            List<Product> list = new ArrayList<>();
+
+            while (rs.next()){
+                Product product = new Product();
+                product.setCode(rs.getInt("code"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getDouble("price"));
+                list.add(product);
+            }
+
+            return list;
+        }
+        catch (SQLException e){
+            throw  new DbException(e.getMessage());
+        }
+        finally {
+            ConnectionManager.closeStatement(st);
+            ConnectionManager.closeResultSet(rs);
+        }
     }
 }

@@ -137,14 +137,15 @@ public class ClientDao implements IClientDao {
                 rs = st.executeQuery();
 
                 List<Client> clients = new ArrayList<>();
+
                 while (rs.next()){
                    Client client = new Client();
                    client.setCode(rs.getInt("code"));
                    client.setName(rs.getString("name"));
 
                    clients.add(client);
-
                 }
+
                 return clients;
             }
             catch (SQLException e ){
