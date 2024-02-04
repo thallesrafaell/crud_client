@@ -73,7 +73,29 @@ public class ClientDao implements IClientDao {
 
     @Override
     public Integer update(Client client) {
-        return null;
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement(
+                   "UPDATE tb_client SET name = ? WHERE code = ?"
+            );
+
+            st.setString(1, client.name);
+            st.setInt(2, client.code);
+
+            int rowsAffected = st.executeUpdate();
+            if(rowsAffected > 0){
+                return rowsAffected;
+            }
+            else {
+                return 0;
+            }
+        }
+        catch (SQLException e){
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            ConnectionManager.closeStatement(st);
+        }
     }
 
     @Override
