@@ -99,8 +99,30 @@ public class ClientDao implements IClientDao {
     }
 
     @Override
-    public Client findById(Client client) {
-        return null;
+    public Client findById(Integer id) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try{
+            st = conn.prepareStatement(
+                    "SELECT * FROM tb_client WHERE code = ?"
+            );
+            st.setInt(1, id);
+            rs = st.executeQuery();
+            if(rs.next()) {
+                Client client = new Client();
+                client.setCode(rs.getInt("code"));
+                client.setName(rs.getString("name"));
+                return client;
+            }
+            else {return null;}
+        }
+        catch (SQLException e){
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            ConnectionManager.closeStatement(st);
+            ConnectionManager.closeResultSet(rs);
+        }
     }
 
     @Override

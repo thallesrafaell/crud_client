@@ -19,14 +19,17 @@ public class ClientDaoTest {
 
         Integer response = clientDao.insert(client);
         Assert.assertTrue(response == 1);
+        clientDao.delete(1);
     }
 
     @Test
     public void testDeleteClient(){
         Client client = new Client();
-        client.setCode(1);
+        client.setCode(3);
         client.setName("DELETADO");
-        int response = clientDao.delete(1);
+        clientDao.insert(client);
+
+        int response = clientDao.delete(3);
         Assert.assertTrue(response == 1);
     }
 
@@ -41,6 +44,18 @@ public class ClientDaoTest {
         client.setName("Laura Beatriz");
         int clientUpdate =clientDao.update(client);
         Assert.assertTrue(clientUpdate == 1);
+        clientDao.delete(2);
+    }
+
+    @Test
+    public void testFindByID(){
+    Client client = new Client(1, "Gabriel");
+    clientDao.insert(client);
+
+    Client foundClient = clientDao.findById(client.code);
+    Assert.assertNotNull(foundClient);
+
+    clientDao.delete(1);
     }
 
 

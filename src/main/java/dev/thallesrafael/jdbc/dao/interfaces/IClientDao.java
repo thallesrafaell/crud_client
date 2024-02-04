@@ -12,7 +12,7 @@ public interface IClientDao {
 
     Integer update(Client client);
 
-    Client findById(Client client);
+    Client findById(Integer id);
 
     List<Client> findAll();
 
