@@ -22,7 +22,7 @@ public class ClientDaoTest {
         Integer response = clientDao.insert(client);
         Assert.assertTrue(response == 1);
 
-        int clientDelete =clientDao.delete(1);
+        int clientDelete =clientDao.delete(client.getCode());
         Assert.assertTrue(clientDelete == 1);
 
 
