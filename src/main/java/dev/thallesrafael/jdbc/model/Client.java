@@ -4,22 +4,25 @@ import java.util.Objects;
 
 public class Client {
 
-    public long code;
+    public int code;
 
     public String name;
+
+
+    public Client(){};
+
+    public Client(Integer code, String name){
+        this.code = code;
+        this.name = name;
+    };
 
     public long getCode() {
         return code;
     }
 
-    public Client(){};
 
-    public Client(long code, String name){
-        this.code = code;
-        this.name = name;
-    }
 
-    public void setCode(Long code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
