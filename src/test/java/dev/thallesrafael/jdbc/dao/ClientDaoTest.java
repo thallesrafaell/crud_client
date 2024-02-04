@@ -7,6 +7,8 @@ import main.java.dev.thallesrafael.jdbc.model.Client;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.List;
+
 public class ClientDaoTest {
     private IClientDao clientDao = DaoFactory.createClientDao();
 
@@ -19,7 +21,11 @@ public class ClientDaoTest {
 
         Integer response = clientDao.insert(client);
         Assert.assertTrue(response == 1);
-        clientDao.delete(1);
+
+        int clientDelete =clientDao.delete(1);
+        Assert.assertTrue(clientDelete == 1);
+
+
     }
 
     @Test
@@ -27,7 +33,8 @@ public class ClientDaoTest {
         Client client = new Client();
         client.setCode(3);
         client.setName("DELETADO");
-        clientDao.insert(client);
+        int clientInsert = clientDao.insert(client);
+        Assert.assertTrue(clientInsert == 1);
 
         int response = clientDao.delete(3);
         Assert.assertTrue(response == 1);
@@ -44,18 +51,46 @@ public class ClientDaoTest {
         client.setName("Laura Beatriz");
         int clientUpdate =clientDao.update(client);
         Assert.assertTrue(clientUpdate == 1);
-        clientDao.delete(2);
+        int clientDelete = clientDao.delete(2);
+        Assert.assertTrue(clientDelete == 1);
     }
 
     @Test
     public void testFindByID(){
     Client client = new Client(1, "Gabriel");
-    clientDao.insert(client);
+    int clientInsert = clientDao.insert(client);
+    Assert.assertTrue(clientInsert == 1);
 
-    Client foundClient = clientDao.findById(client.code);
+    Client foundClient = clientDao.findById(client.getCode());
     Assert.assertNotNull(foundClient);
 
-    clientDao.delete(1);
+    int cliendtDelete = clientDao.delete(1);
+    Assert.assertTrue(cliendtDelete == 1);
+    }
+
+    @Test
+    public void findAll(){
+        Client client = new Client(1, "Gabriel");
+        Client client2 = new Client(2, "Thalles");
+        Client client3 = new Client(3, "Laura");
+
+
+        int clientInsert = clientDao.insert(client);
+        Assert.assertTrue(clientInsert == 1);
+        clientInsert = clientDao.insert(client2);
+        Assert.assertTrue(clientInsert == 1);
+        clientInsert = clientDao.insert(client3);
+        Assert.assertTrue(clientInsert == 1);
+
+        List<Client> list = clientDao.findAll();
+        Assert.assertNotNull(list);
+        Assert.assertTrue(list.size() == 3);
+
+        list.stream().forEach(clientDelete -> clientDao.delete(clientDelete.getCode()));
+
+        list = clientDao.findAll();
+        Assert.assertTrue(list.size() == 0);
+
     }
 
 

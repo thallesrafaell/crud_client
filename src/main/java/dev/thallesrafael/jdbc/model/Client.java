@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Client {
 
-    public int code;
+    private int code;
 
-    public String name;
+    private String name;
 
 
     public Client(){};
@@ -16,7 +16,7 @@ public class Client {
         this.name = name;
     };
 
-    public long getCode() {
+    public int getCode() {
         return code;
     }
 
