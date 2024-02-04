@@ -54,6 +54,7 @@ public class ProductDao implements IProductDao {
 
             return rowsAffected;
         }
+
         catch (SQLException e){
             throw  new DbException(e.getMessage());
         }
@@ -64,7 +65,24 @@ public class ProductDao implements IProductDao {
 
     @Override
     public Integer update(Product product) {
-        return null;
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement(
+                    "UPDATE tb_product SET name = ?, price = ? WHERE code = ?"
+            );
+            st.setString(1, product.getName());
+            st.setDouble(2, product.getPrice());
+            st.setInt(3,product.getCode());
+
+            int rowsAffected = st.executeUpdate();
+            return rowsAffected;
+        }
+        catch (SQLException e){
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            ConnectionManager.closeStatement(st);
+        }
     }
 
     @Override

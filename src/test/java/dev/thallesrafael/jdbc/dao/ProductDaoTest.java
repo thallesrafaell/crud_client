@@ -29,6 +29,23 @@ public class ProductDaoTest {
         Assert.assertTrue(clientDelete == 1);
     }
 
+    @Test
+    public void testUpdateProduct(){
+        Product product = new Product();
+        product.setCode(1);
+        product.setName("Tv");
+        product.setPrice(1000);
+        int productInsert = productDao.insert(product);
+        Assert.assertTrue(productInsert ==1);
+
+        product.setPrice(2599.99);
+        int productUpdate = productDao.update(product);
+        Assert.assertTrue(productInsert == 1);
+
+        int productDelete = productDao.delete(1);
+        Assert.assertTrue(productDelete == 1);
+    }
+
 
 
 }
