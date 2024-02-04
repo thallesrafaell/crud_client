@@ -47,5 +47,20 @@ public class ProductDaoTest {
     }
 
 
+    @Test
+    public void testFindById(){
+        Product product = new Product(1,"Smart Phone",2599.99);
+        int clientInsert = productDao.insert(product);
+        Assert.assertTrue(clientInsert == 1);
+
+
+        Product findProduct = productDao.findById(1);
+        Assert.assertNotNull(findProduct);
+
+        int deleteProduct = productDao.delete(1);
+        Assert.assertTrue(deleteProduct == 1);
+    }
+
+
 
 }

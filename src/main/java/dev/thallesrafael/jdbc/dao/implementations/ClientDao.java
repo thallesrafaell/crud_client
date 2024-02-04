@@ -77,7 +77,7 @@ public class ClientDao implements IClientDao {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                   "UPDATE tb_client SET name = ? WHERE code = ?"
+            "UPDATE tb_client SET name = ? WHERE code = ?"
             );
 
             st.setString(1, client.getName());

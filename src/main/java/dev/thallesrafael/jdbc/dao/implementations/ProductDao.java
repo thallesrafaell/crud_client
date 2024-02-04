@@ -7,6 +7,7 @@ import main.java.dev.thallesrafael.jdbc.model.Product;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -87,8 +88,36 @@ public class ProductDao implements IProductDao {
 
     @Override
     public Product findById(Integer id) {
-        return null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+    try {
+            st = conn.prepareStatement(
+              "SELECT * FROM tb_product WHERE code = ?"
+            );
+
+            st.setInt(1, id);
+
+            rs = st.executeQuery();
+
+            if(rs.next()){
+                Product product =new Product();
+                product.setCode(rs.getInt("code"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getDouble("price"));
+                return product;
+            }
+            return null;
+
+        }
+        catch (SQLException e){
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            ConnectionManager.closeStatement(st);
+            ConnectionManager.closeResultSet(rs);
+        }
     }
+
 
     @Override
     public List<Product> findAll() {
